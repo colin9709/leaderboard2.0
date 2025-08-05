@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分争霸榜</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 积分争霸榜 🏆</h1>
+        </header>
+        
+        <div class="main-content">
+            <!-- 左侧排行榜 -->
+            <div class="leaderboard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="transform: translateY(8px); color: #FFA500; text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;">🏅 排行榜</h2>
+                    <button id="settlementBtn" style="background: linear-gradient(45deg, #FFD700, #FFA500); color: white; border: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transform: translateX(-5px);">结算</button>
+                </div>
+                <div class="ranking-list" id="rankingList">
+                    <!-- 排行榜项将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <!-- 右侧计分区域 -->
+            <div class="scoring-panel">
+                <h2>计分面板</h2>
+                
+                <!-- 添加小组 -->
+                <div class="panel-section">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3 style="margin: 0;">添加小组</h3>
+                        <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); align-self: flex-start;">（小组数量范围请控制在≤8）</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="teamName" placeholder="输入小组名称">
+                        <button id="addTeam">添加小组</button>
+                    </div>
+                </div>
+                
+                <!-- 选择小组 -->
+                <div class="panel-section">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3 style="margin: 0;">选择小组</h3>
+                        <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); align-self: flex-start;"></span>
+                    </div>
+                    <div class="input-group">
+                        <select id="teamSelect">
+                            <option value="">请选择小组</option>
+                        </select>
+                        <button id="removeTeam">删除小组</button>
+                    </div>
+                </div>
+                
+                <!-- 调整积分 -->
+                <div class="panel-section">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3 style="margin: 0;">调整积分</h3>
+                        <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); align-self: flex-start;"></span>
+                    </div>
+                    <div class="score-controls">
+                        <button id="decreaseScore" class="score-btn negative">-</button>
+                        <input type="number" id="scoreValue" value="1" min="1">
+                        <button id="increaseScore" class="score-btn positive">+</button>
+                    </div>
+                </div>
+                
+                <!-- 小组信息 -->
+                <div class="panel-section">
+                    <h3>小组信息</h3>
+                    <div class="team-info" id="teamInfo">
+                        <p>请选择一个小组</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 结算浮窗 -->
+    <div id="settlementModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div style="background: linear-gradient(135deg, #00F2A7, #4A35F0); margin: 10% auto; padding: 30px; border-radius: 15px; width: 80%; max-width: 500px; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+            <span id="closeModal" style="color: white; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <h2 style="text-align: center; margin-top: 0; color: white; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);">🏆 比赛结果 🏆</h2>
+            <div id="winnerList" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <!-- 前三名小组将在这里显示 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部版权信息 -->
+    <footer class="footer">
+        <p>Powered by @碳基AI实验室</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
