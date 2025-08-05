@@ -1,0 +1,836 @@
+/* 全局样式设置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #00F2A7, #4A35F0);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow: hidden; /* 防止整个页面滚动 */
+}
+
+/* 撞色背景动画 */
+body::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+    animation: backgroundFloat 20s infinite linear;
+    z-index: -1;
+}
+
+@keyframes backgroundFloat {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 0 20px;
+    box-sizing: border-box; /* 确保padding包含在width内 */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 20px;
+    position: relative;
+}
+
+header h1 {
+    font-size: clamp(1.5rem, 4vw, 2.8rem); /* 使用clamp函数实现流体字体大小 */
+    color: white;
+    letter-spacing: 2px;
+}
+
+.main-content {
+    display: flex;
+    gap: clamp(15px, 2vw, 20px); /* 使用clamp函数实现流体间距 */
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box; /* 确保padding包含在width内 */
+}
+
+/* 左侧排行榜样式 */
+.leaderboard {
+    flex: 3;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: clamp(15px, 2vw, 20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 250px; /* 减小最小宽度以适应小屏幕 */
+    position: relative;
+    overflow: hidden;
+    max-height: 70vh; /* 使用视口高度单位，使高度根据屏幕大小自适应 */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* 确保padding包含在width内 */
+}
+
+.leaderboard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00F2A7, #4A35F0);
+}
+
+.leaderboard h2 {
+    font-size: clamp(1.2rem, 3vw, 1.4rem); /* 使用clamp函数实现流体字体大小 */
+    margin: 0;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.leaderboard h2::after {
+    content: none;
+}
+
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 50vh; /* 使用视口高度单位，使高度根据屏幕大小自适应 */
+    overflow-y: auto; /* 允许内部滚动 */
+    flex: 1; /* 占据剩余空间 */
+    padding-right: 5px; /* 为滚动条留出空间 */
+}
+
+/* 滚动条样式 */
+.ranking-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ranking-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.ranking-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.ranking-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(245, 245, 245, 0.9); /* 大气的灰白色背景，90%不透明度 */
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.7); /* 白色边框 */
+    position: relative;
+    overflow: hidden;
+    border-left: 5px solid #D3D3D3; /* 浅灰色左侧线条 */
+}
+
+/* 第一名 - 金牌配色 */
+.ranking-item.first {
+    background: rgba(255, 215, 0, 0.9); /* 纯正金色背景，90%不透明度 */
+    border: 1px solid rgba(255, 215, 0, 1); /* 纯正金色边框，100%不透明度 */
+    border-left: 5px solid #FFD700; /* 纯正金牌颜色左侧线条 */
+}
+
+/* 第二名 - 银牌配色 */
+.ranking-item.second {
+    background: rgba(192, 192, 192, 0.9); /* 纯正银色背景，90%不透明度 */
+    border: 1px solid rgba(192, 192, 192, 1); /* 纯正银色边框，100%不透明度 */
+    border-left: 5px solid #C0C0C0; /* 纯正银牌颜色左侧线条 */
+}
+
+/* 第三名 - 铜牌配色 */
+.ranking-item.third {
+    background: rgba(205, 127, 50, 0.9); /* 纯正铜色背景，90%不透明度 */
+    border: 1px solid rgba(205, 127, 50, 1); /* 纯正铜色边框，100%不透明度 */
+    border-left: 5px solid #CD7F32; /* 纯正铜牌颜色左侧线条 */
+}
+
+/* 第四名及以后 - 大气的灰白色 */
+.ranking-item:not(.first):not(.second):not(.third) {
+    background: rgba(245, 245, 245, 0.9); /* 大气的灰白色背景，90%不透明度 */
+    border: 1px solid rgba(255, 255, 255, 0.7); /* 白色边框 */
+    border-left: 5px solid #D3D3D3; /* 浅灰色左侧线条 */
+}
+
+/* 第四名及以后的文字颜色 */
+.ranking-item:not(.first):not(.second):not(.third) .rank,
+.ranking-item:not(.first):not(.second):not(.third) .team-name,
+.ranking-item:not(.first):not(.second):not(.third) .team-score {
+    color: #007BA7; /* 纯正的湖蓝色 */
+}
+
+/* 前三名文字颜色 */
+.ranking-item.first .rank,
+.ranking-item.first .team-name,
+.ranking-item.first .team-score {
+    color: white; /* 改回白色 */
+}
+
+.ranking-item.second .rank,
+.ranking-item.second .team-name,
+.ranking-item.second .team-score {
+    color: white; /* 改回白色 */
+}
+
+.ranking-item.third .rank,
+.ranking-item.third .team-name,
+.ranking-item.third .team-score {
+    color: white; /* 改回白色 */
+}
+
+/* 排名数字样式 */
+.rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 60px;
+    text-align: center;
+}
+
+.team-name {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 0 15px;
+}
+
+.team-score {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 右侧计分区域样式 */
+.scoring-panel {
+    flex: 2;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: clamp(15px, 2vw, 20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 250px; /* 减小最小宽度以适应小屏幕 */
+    position: relative;
+    overflow: hidden;
+    max-height: 70vh; /* 使用视口高度单位，使高度根据屏幕大小自适应 */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* 确保padding包含在width内 */
+}
+
+.scoring-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00F2A7, #4A35F0);
+}
+
+.scoring-panel h2 {
+    font-size: clamp(1.2rem, 3vw, 1.4rem); /* 使用clamp函数实现流体字体大小 */
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.scoring-panel h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #00F2A7, #4A35F0);
+    border-radius: 3px;
+}
+
+.panel-section {
+    margin-bottom: 25px;
+}
+
+.panel-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: #fff;
+    position: relative;
+    padding-left: 15px;
+}
+
+.panel-section h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #00F2A7;
+    border-radius: 50%;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.input-group input,
+.input-group select,
+.input-group button {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.0rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.input-group input,
+.input-group select {
+    flex: 1;
+    min-width: 150px;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 添加小组按钮 - 绿色纯色 */
+#addTeam {
+    background: #4CAF50;
+    color: white;
+}
+
+/* 删除小组按钮 - 蓝色纯色 */
+#removeTeam {
+    background: #2196F3;
+    color: white;
+}
+
+.input-group button {
+    background: linear-gradient(45deg, #00F2A7, #4A35F0);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.input-group button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.input-group button:hover::before {
+    left: 100%;
+}
+
+.input-group button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.score-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.score-btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 80px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.score-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.score-btn:hover::before {
+    left: 100%;
+}
+
+.score-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 减号按钮 - 蓝色 */
+.score-btn.negative {
+    background: #2196F3;
+    color: white;
+}
+
+/* 加号按钮 - 绿色 */
+.score-btn.positive {
+    background: #4CAF50;
+    color: white;
+}
+
+#scoreValue {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.2rem; /* 从0.8rem调整为1.2rem，放大2个字号 */
+    height: 48px;
+}
+
+.team-info {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-direction: column;
+    width: 100%;
+    /* 移除默认的padding影响居中效果 */
+    box-sizing: border-box;
+}
+
+.team-info > div {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* 确保内部div没有额外的padding或margin */
+    padding: 0;
+    margin: 0;
+}
+
+.team-info p {
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    /* 移除可能存在的默认样式 */
+    padding: 0;
+}
+
+.team-info h3 {
+    color: #fff;
+    margin: 5px 0;
+    font-size: 1.0rem;
+    text-align: center;
+    width: 100%;
+    /* 移除可能存在的默认样式 */
+    padding: 0;
+    font-weight: normal;
+}
+
+/* 去掉小组信息显示框内文字左侧的绿色圆点 */
+.team-info h3::before {
+    display: none;
+}
+
+.team-info p::before {
+    display: none;
+}
+
+/* 下拉选择框样式调整 */
+#teamSelect {
+    color: #000; /* 将下拉选择框文字颜色改为黑色 */
+}
+
+#teamSelect option {
+    color: #000; /* 将所有选项文字颜色改为黑色 */
+    background: #fff; /* 设置选项背景为白色 */
+}
+
+#teamSelect:focus option:checked {
+    background: #4CAF50; /* 选中效果颜色改为绿色 */
+    color: #fff; /* 选中时文字为白色 */
+}
+
+/* 底部版权信息 */
+.footer {
+    text-align: center;
+    padding: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    background: transparent;
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* 大屏幕优化 (16英寸及以上) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    header h1 {
+        font-size: 3.2rem;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        padding: 25px;
+    }
+    
+    .ranking-item {
+        padding: 18px;
+    }
+    
+    .team-name {
+        font-size: 1.6rem;
+    }
+    
+    .team-score {
+        font-size: 1.4rem;
+    }
+    
+    .rank {
+        font-size: 1.7rem;
+        width: 70px;
+    }
+    
+    .input-group input,
+    .input-group select,
+    .input-group button {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+    
+    .score-btn {
+        padding: 18px 25px;
+        font-size: 1.3rem;
+    }
+    
+    #scoreValue {
+        font-size: 1.4rem;
+        height: 55px;
+    }
+    
+    .team-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .team-info p {
+        font-size: 1.0rem;
+    }
+}
+
+/* 中等大屏幕优化 (14-15英寸) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .container {
+        max-width: 1100px;
+    }
+    
+    header h1 {
+        font-size: 3.0rem;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        padding: 22px;
+    }
+    
+    .ranking-item {
+        padding: 16px;
+    }
+    
+    .team-name {
+        font-size: 1.5rem;
+    }
+    
+    .team-score {
+        font-size: 1.3rem;
+    }
+    
+    .rank {
+        font-size: 1.6rem;
+        width: 65px;
+    }
+}
+
+/* 中等屏幕优化 (平板电脑等) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .main-content {
+        gap: 15px;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        min-width: 200px;
+        padding: 15px;
+    }
+    
+    .leaderboard h2,
+    .scoring-panel h2 {
+        font-size: 1.2rem;
+    }
+    
+    .team-name {
+        font-size: 1.2rem;
+        padding: 0 10px;
+    }
+    
+    .team-score {
+        font-size: 1.0rem;
+        padding: 3px 10px;
+    }
+    
+    .rank {
+        font-size: 1.3rem;
+        width: 50px;
+    }
+    
+    .input-group input,
+    .input-group select,
+    .input-group button {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .score-btn {
+        padding: 12px 15px;
+        font-size: 1.0rem;
+    }
+    
+    #scoreValue {
+        font-size: 1.0rem;
+        height: 40px;
+        width: 60px;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 992px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2.3rem;
+    }
+    
+    .main-content {
+        gap: 15px;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        padding: 15px;
+    }
+    
+    .ranking-item {
+        padding: 12px;
+    }
+    
+    .team-name {
+        font-size: 1.3rem;
+        padding: 0 10px;
+    }
+    
+    .team-score {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* 减少页面padding */
+    }
+    
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .leaderboard h2,
+    .scoring-panel h2 {
+        font-size: 1.3rem;
+    }
+    
+    .panel-section h3 {
+        font-size: 1.0rem;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .input-group input,
+    .input-group select,
+    .input-group button {
+        width: 100%;
+    }
+    
+    .score-controls {
+        flex-direction: column;
+    }
+    
+    .score-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    
+    header h1 {
+        font-size: 1.7rem;
+    }
+    
+    .leaderboard,
+    .scoring-panel {
+        padding: 12px;
+    }
+    
+    .leaderboard h2,
+    .scoring-panel h2 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .ranking-item {
+        padding: 10px;
+    }
+    
+    .rank {
+        font-size: 1.0rem;
+        width: 40px;
+    }
+    
+    .team-name {
+        font-size: 1.2rem;
+        padding: 0 5px;
+    }
+    
+    .team-score {
+        font-size: 0.8rem;
+        padding: 3px 10px;
+    }
+    
+    .panel-section {
+        margin-bottom: 20px;
+    }
+    
+    .input-group button,
+    .score-btn {
+        padding: 10px 15px;
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 320px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .team-name {
+        font-size: 1.1rem;
+    }
+    
+    .team-score {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+    }
+    
+    .input-group button,
+    .score-btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+}
